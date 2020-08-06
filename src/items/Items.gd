@@ -13,9 +13,15 @@ var database = {
 var ITEMS = {
 	"Steel Dagger": {
 		"icon": "res://assets/sprites/items/steel_dagger.png",
+		"slot": "Weapon",
 	},
 	"Dirk": {
 		"icon": "res://assets/sprites/items/dirk.png",
+		"slot": "Weapon",
+	},
+	"Wolfskin Armor": {
+		"icon": "res://assets/sprites/items/wolfskin_armor.png",
+		"slot": "Armor",
 	}
 }
 

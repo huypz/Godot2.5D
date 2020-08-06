@@ -10,6 +10,9 @@ var sprite
 var anim_player
 var facing = "right"
 
+# Equipment  SLOT : ITEM
+var equipment : Dictionary
+
 # Inventory  SLOT : ITEM
 var inventory : Dictionary
 var inventory_size = 8
@@ -22,14 +25,22 @@ func _ready():
 	for i in range(1, inventory_size + 1):
 		inventory[get_node("HUD/Inventory/Slot" + str(i))] = null
 		
+	# Set up inventory slots.
+	for slot in get_node("HUD/Equipment").get_children():
+		equipment[slot] = null
+		
 	give_item("Steel Dagger")
 	give_item("Dirk")
+	give_item("Wolfskin Armor")
 
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("debug"):
 		print("player inv:")
 		print(inventory)
+		print("\n")
+#		print("player eq:")
+#		print(equipment)
 		
 	global_direction = Vector3.ZERO
 	
@@ -113,6 +124,10 @@ func get_available_inventory_slot():
 		if inventory.get(slot) == null:
 			return slot
 	return null
+	
+	
+func get_equipment():
+	return equipment
 	
 
 func get_inventory():

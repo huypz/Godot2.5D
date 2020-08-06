@@ -1,0 +1,209 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/player/HUD.gd" type="Script" id=1]
+[ext_resource path="res://assets/hud/hud.png" type="Texture" id=2]
+[ext_resource path="res://assets/hud/loot_hud.png" type="Texture" id=3]
+
+[node name="HUD" type="Control"]
+margin_right = 1920.0
+margin_bottom = 1080.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Base" type="TextureRect" parent="."]
+margin_left = 600.0
+margin_right = 800.0
+margin_bottom = 600.0
+texture = ExtResource( 2 )
+stretch_mode = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Equipment" type="GridContainer" parent="."]
+margin_left = 609.0
+margin_top = 303.0
+margin_right = 791.0
+margin_bottom = 347.0
+custom_constants/hseparation = 2
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot1" type="Panel" parent="Equipment"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 44.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 44, 44 )
+
+[node name="Slot2" type="Panel" parent="Equipment"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 46.0
+margin_right = 90.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 44, 44 )
+
+[node name="Slot3" type="Panel" parent="Equipment"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 92.0
+margin_right = 136.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 44, 44 )
+
+[node name="Slot4" type="Panel" parent="Equipment"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 138.0
+margin_right = 182.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 44, 44 )
+
+[node name="Inventory" type="GridContainer" parent="."]
+margin_left = 611.0
+margin_top = 382.0
+margin_right = 651.0
+margin_bottom = 422.0
+custom_constants/vseparation = 6
+custom_constants/hseparation = 6
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot1" type="Panel" parent="Inventory"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot2" type="Panel" parent="Inventory"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 46.0
+margin_right = 86.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot3" type="Panel" parent="Inventory"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 92.0
+margin_right = 132.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot4" type="Panel" parent="Inventory"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 138.0
+margin_right = 178.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot5" type="Panel" parent="Inventory"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 46.0
+margin_right = 40.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot6" type="Panel" parent="Inventory"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 46.0
+margin_top = 46.0
+margin_right = 86.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot7" type="Panel" parent="Inventory"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 92.0
+margin_top = 46.0
+margin_right = 132.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot8" type="Panel" parent="Inventory"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 138.0
+margin_top = 46.0
+margin_right = 178.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="LootBase" type="TextureRect" parent="."]
+margin_left = 600.0
+margin_top = 500.0
+margin_right = 800.0
+margin_bottom = 600.0
+texture = ExtResource( 3 )
+
+[node name="Loot" type="GridContainer" parent="LootBase"]
+margin_left = 11.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 47.0
+custom_constants/vseparation = 6
+custom_constants/hseparation = 6
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot1" type="Panel" parent="LootBase/Loot"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot2" type="Panel" parent="LootBase/Loot"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 46.0
+margin_right = 86.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot3" type="Panel" parent="LootBase/Loot"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 92.0
+margin_right = 132.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot4" type="Panel" parent="LootBase/Loot"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 138.0
+margin_right = 178.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot5" type="Panel" parent="LootBase/Loot"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 46.0
+margin_right = 40.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot6" type="Panel" parent="LootBase/Loot"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 46.0
+margin_top = 46.0
+margin_right = 86.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot7" type="Panel" parent="LootBase/Loot"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 92.0
+margin_top = 46.0
+margin_right = 132.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Slot8" type="Panel" parent="LootBase/Loot"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 138.0
+margin_top = 46.0
+margin_right = 178.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 40, 40 )

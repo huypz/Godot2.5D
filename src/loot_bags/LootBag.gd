@@ -22,6 +22,7 @@ func _ready():
 
 func _process(_delta):
 	if Input.is_action_just_pressed("debug"):
+		print("bag slots:")
 		print(slots)
 	
 	var item_found = false
@@ -37,7 +38,7 @@ func _process(_delta):
 func insert_item(item_id, slot = get_available_slot()):
 	slots[slot] = item_id
 	
-func remove_item(slot):
+func remove_item_from_slot(slot):
 	slots[slot] = null
 	
 
@@ -55,5 +56,5 @@ func get_slots():
 func despawn():
 	for slot in slots:
 		if slots.get(slot) != null:
-			Items.remove(slots.get(slot))
+			Items.remove_item(slots.get(slot))
 	queue_free()

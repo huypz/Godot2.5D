@@ -29,9 +29,14 @@ func _ready():
 	# Get loot slots:
 	for slot in $LootBase/Loot.get_children():
 		controls.append(slot)
+		
+	$LootBase.hide()
 
 
 func _process(_delta):
+	if current_bag != null:
+		bag_slots = current_bag.get_slots()
+	
 	process_hud()
 	var cursor_pos = get_global_mouse_position()
 	
@@ -107,13 +112,7 @@ func release(pos):
 		slots[last_slot] = null
 		player_inventory[last_slot] = null
 	# Check if the slot is empty.
-	elif slots.get(control) == null:
-		# Move item.
-		item_held.rect_global_position = control.rect_global_position + control.rect_size / 2 - item_held.rect_size / 2
-		slots[last_slot] = null
-		slots[control] = item_held
-		item_held = null
-		
+	elif slots.get(control) == null:	
 		# If the item is from player inventory, remove it from inventory.
 		if last_slot.get_parent() == $Inventory:
 			player_inventory[last_slot] = null
@@ -121,15 +120,25 @@ func release(pos):
 		# If the item is from a loot bag, remove it from the bag.
 		if last_slot.get_parent() == $LootBase/Loot:
 			if current_bag != null:
-				current_bag.remove_item(last_slot)
+				bag_slots[last_slot] = null
+				current_bag.remove_item_from_slot(last_slot)
 		
 		# If the control is from player inventory, insert it.
 		if control.get_parent() == $Inventory:
 			player_inventory[control] = item_held_id
+			
+		# If the control is from loot bag, insert it.
+		if control.get_parent() == $LootBase/Loot:
+			current_bag.insert_item(item_held_id, control)
 		
-		
+		# Move item.
+		item_held.rect_global_position = control.rect_global_position + control.rect_size / 2 - item_held.rect_size / 2
+		slots[last_slot] = null
+		slots[control] = item_held
+		item_held = null
 	# Swap items if the slot is not empty.
 	elif slots.get(control) != null:
+		# Swap items' TextureRects.
 		var other_item = slots.get(control)
 		other_item.rect_global_position = last_slot.rect_global_position + last_slot.rect_size / 2 - other_item.rect_size / 2
 		item_held.rect_global_position = control.rect_global_position + control.rect_size / 2 - item_held.rect_size / 2
@@ -140,20 +149,35 @@ func release(pos):
 		var last_slot_type = last_slot.get_parent()
 		var control_slot_type = control.get_parent()
 		
-#		# Insert item_held into new slot.
-#		if control_slot_type == $Inventory:
-#			player_inventory[control] = item_held_id
-#		if control_slot_type == $LootBase/Loot:
-#			current_bag.insert_item(item_held_id)
-
-		player_inventory[last_slot] = player_inventory.get(control)
-		player_inventory[control] = item_held_id
+		# If the swap is between inventory items:
+		if last_slot_type == $Inventory and control_slot_type == $Inventory:
+			player_inventory[last_slot] = player_inventory[control]
+			player_inventory[control] = item_held_id
+			
+		# If the swap is between loot items:
+		if last_slot_type == $LootBase/Loot and control_slot_type == $LootBase/Loot:
+			current_bag.insert_item(bag_slots.get(control), last_slot)
+			current_bag.insert_item(item_held_id, control)
+		
+		# If the swap is from inventory to loot:
+		if last_slot_type == $Inventory and control_slot_type == $LootBase/Loot:
+			player_inventory[last_slot] = bag_slots.get(control)
+			current_bag.insert_item(item_held_id, control)
+			
+		# If the swap is from loot to inventory:
+		if last_slot_type == $LootBase/Loot and control_slot_type == $Inventory:
+			current_bag.insert_item(player_inventory[control], last_slot)
+			player_inventory[control] = item_held_id
 		
 	else:
 		return_item()
 
 
 func drop_item(item_id):
+	if current_bag != null:
+		current_bag.insert_item(item_id)
+		return
+		
 	var loot_bag = LootBag.instance()
 	get_tree().root.get_node("World").add_child(loot_bag)
 	loot_bag.insert_item(item_id)

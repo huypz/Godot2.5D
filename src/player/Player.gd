@@ -21,10 +21,14 @@ func _ready():
 	# Set up inventory slots.
 	for i in range(1, inventory_size + 1):
 		inventory[get_node("HUD/Inventory/Slot" + str(i))] = null
+		
+	give_item("Steel Dagger")
+	give_item("Dirk")
 
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("debug"):
+		print("player inv:")
 		print(inventory)
 		
 	global_direction = Vector3.ZERO
@@ -90,10 +94,16 @@ func process_input():
 		rotate_y(PI * 0.01)	
 		
 		
-func give_item(item):
+func give_item(item_name):
 	var available_slot = get_available_inventory_slot()
 	if available_slot != null:
-		inventory[available_slot] = item
+		# Generate a random id for the item
+		randomize()
+		var item_id = randi() % 1000
+		while (Items.database.keys().has(item_id)):
+			item_id = randi() % 1000
+		Items.add_item(item_id, item_name)
+		inventory[available_slot] = item_id
 	else:
 		return false
 	
@@ -107,3 +117,13 @@ func get_available_inventory_slot():
 
 func get_inventory():
 	return inventory
+
+
+func _on_Area_area_entered(area):
+	if area.get_parent().is_in_group("loot_bag"):
+		$HUD.show_loot_bag(area.get_parent())
+
+
+func _on_Area_area_exited(area):
+	if area.get_parent().is_in_group("loot_bag"):
+		$HUD.hide_loot_bag(area.get_parent())

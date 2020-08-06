@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/char_rogue.png-0ef2038551253e8b9b5479cbd7e006c8.stex"
+path="res://.import/char_rogue.png-c695631a63429518c514f68eb1ab3dac.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/char_rogue.png"
-dest_files=[ "res://.import/char_rogue.png-0ef2038551253e8b9b5479cbd7e006c8.stex" ]
+source_file="res://assets/sprites/chars/char_rogue.png"
+dest_files=[ "res://.import/char_rogue.png-c695631a63429518c514f68eb1ab3dac.stex" ]
 
 [params]
 

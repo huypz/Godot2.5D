@@ -19,6 +19,10 @@ config/name="Mald 2.5D"
 run/main_scene="res://World.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Items="*res://src/items/Items.gd"
+
 [display]
 
 window/size/width=800

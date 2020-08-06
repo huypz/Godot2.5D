@@ -107,6 +107,7 @@ func click(pos):
 		if item_held != null:
 			item_held_offset = item_held.rect_global_position - pos
 			last_slot = control
+			move_child(item_held, get_child_count())
 		
 	
 func release(pos):
@@ -130,6 +131,12 @@ func release(pos):
 		
 	# Check if the slot is empty, then move item.
 	elif slots.get(control) == null:
+		# Check for valid equipment slot.
+		if get_slot_type(control) == "Equipment":
+			if !item_has_slot_type(item_held_id) and control.name != get_item_slot_type(item_held_id):
+				return_item()
+				return
+		
 		remove_item(item_held_id, last_slot, get_slot_type(last_slot))
 		insert_item(item_held_id, control, get_slot_type(control))
 		# Move item TextureRects.
@@ -141,6 +148,13 @@ func release(pos):
 	# Swap items if the slot is not empty.
 	elif slots.get(control) != null:
 		var other_item_id = get_item_id_from_slot(control)
+		# Check for valid equipment slot.
+		if get_slot_type(last_slot) == "Equipment" or get_slot_type(control) == "Equipment":
+			if !item_has_slot_type(item_held_id) and !item_has_slot_type(other_item_id):
+				if get_item_slot_type(item_held_id) != get_item_slot_type(other_item_id):
+					return_item()
+					return
+			
 		swap_items(item_held_id, other_item_id, last_slot, control)
 			
 		# Swap items' TextureRects.
@@ -160,6 +174,16 @@ func swap_items(item1_id, item2_id, slot1, slot2):
 	remove_item(item2_id, slot2, get_slot_type(slot2))
 	insert_item(item1_id, slot2, get_slot_type(slot2))
 	insert_item(item2_id, slot1, get_slot_type(slot1))
+
+
+func item_has_slot_type(item_id):
+	var item_properties = Items.get_item(item_id)
+	return item_properties.has("slot")
+
+
+func get_item_slot_type(item_id):
+	var item_properties = Items.get_item(item_id)
+	return Items.ITEMS[item_properties.get("name")]["slot"]
 
 
 func get_item_id_from_slot(slot):

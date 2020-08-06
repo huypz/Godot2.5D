@@ -36,11 +36,13 @@ func _ready():
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("debug"):
+#		print("item database:")
+#		print(Items.database)
 		print("player inv:")
 		print(inventory)
 		print("\n")
-#		print("player eq:")
-#		print(equipment)
+		print("player eq:")
+		print(equipment)
 		
 	global_direction = Vector3.ZERO
 	

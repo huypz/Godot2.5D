@@ -1,6 +1,7 @@
 extends Sprite3D
 
-var duration := 180
+# Time (sec) before loot bag despawns.
+var duration := 30
 
 # SLOT : ITEM_ID
 var slots : Dictionary setget , get_slots

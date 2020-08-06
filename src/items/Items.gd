@@ -40,6 +40,6 @@ func get_item(item_id):
 	
 func remove_item(item_id):
 	for item in database:
-		if item.get_meta("id") == item_id:
-			database.remove(item)
+		if item == item_id:
+			database.erase(item)
 			return true

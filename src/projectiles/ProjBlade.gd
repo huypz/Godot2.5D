@@ -2,7 +2,7 @@ extends Area
 
 # Physics properties
 var source setget set_source
-var angle setget set_angle
+var target_pos setget set_target_pos
 
 # Projectile properties
 var duration := 3
@@ -22,9 +22,8 @@ func _physics_process(delta):
 	translate_object_local(Vector3(0, 0, -speed * delta))
 
 
-func set_angle(pos):
+func set_target_pos(pos):
 	global_transform = global_transform.looking_at(pos, Vector3.UP)
-	#print(rotation_degrees)
 
 
 func set_source(node):
@@ -36,6 +35,5 @@ func despawn():
 
 
 func _on_ProjBlade_body_entered(body):
-	print(body)
 	if (body != source):
 		queue_free()

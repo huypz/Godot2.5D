@@ -4,6 +4,12 @@ const Projectile = preload("res://src/projectiles/ProjBlade.tscn")
 
 onready var camera = get_node("Camera")
 onready var cursor = get_node("Cursor")
+onready var attack_ray = get_node("AttackRayCast")
+onready var attack_timer = get_node("AttackTimer")
+
+# Player properties
+var attack_cooldown : float = 0.1
+var attacking : bool = false
 
 # Physics
 var cursor_pos : Vector3
@@ -43,8 +49,10 @@ func _ready():
 func _physics_process(delta):	
 	global_direction = Vector3.ZERO
 	
+	process_cursor()
 	process_input()
-	look_at_cursor()
+	if (!attacking):
+		update_movement_animation()
 	
 	local_direction = move_and_slide(local_direction * speed, Vector3(0, 1, 0))
 
@@ -61,6 +69,40 @@ func process_input():
 		
 	local_direction = global_direction.normalized().rotated(Vector3(0, 1, 0), rotation.y)
 	
+	# Camera controls.
+	if Input.is_action_pressed("rotate_right"):
+		rotate_y(-PI * 0.01)
+	elif Input.is_action_pressed("rotate_left"):
+		rotate_y(PI * 0.01)	
+		
+	# Attack
+	if Input.is_action_pressed("left_click"):
+		attacking = true
+		anim_player.stop()
+		if (attack_timer.is_stopped()):
+			attack();
+	elif Input.is_action_just_released("left_click"):
+		attacking = false
+		
+		
+		
+func attack():
+	attacking = true
+	attack_timer.set_wait_time(attack_cooldown)
+	attack_timer.start()
+	
+	attack_ray.global_transform = global_transform.looking_at(cursor_pos, Vector3.UP)
+	
+	var proj = Projectile.instance()
+	proj.set_source(self)
+	get_tree().root.get_node("World").add_child(proj)
+	proj.global_transform.origin = global_transform.origin
+	proj.set_target_pos(cursor_pos)
+	
+	update_attack_animation()
+	
+
+func update_movement_animation():
 	# Right
 	if local_direction == Vector3(1, 0, 0).rotated(Vector3(0, 1, 0), rotation.y):
 		anim_player.play("walk_right")
@@ -94,32 +136,41 @@ func process_input():
 		anim_player.play("walk_down")
 		facing = "down"
 	
-	
+	# Idle
 	if local_direction == Vector3.ZERO:
 		anim_player.play("idle_" + facing)
-	
-	# Camera controls.
-	if Input.is_action_pressed("rotate_right"):
-		rotate_y(-PI * 0.01)
-	elif Input.is_action_pressed("rotate_left"):
-		rotate_y(PI * 0.01)	
-		
-	# Attack
-	if Input.is_action_just_pressed("left_click"):
-		attack();
-	elif Input.is_action_just_released("left_click"):
-		pass
-		
-		
-func attack():
-	var proj = Projectile.instance()
-	proj.set_source(self)
-	get_tree().root.get_node("World").add_child(proj)
-	proj.global_transform.origin = global_transform.origin
-	proj.set_angle(cursor_pos)
 
+
+func update_attack_animation():
+	var player_rotation = attack_ray.get_rotation_degrees().y
+	
+	if (player_rotation <= 45 and player_rotation >= -45):
+		facing = "up"
+		sprite.set_frame(14)
+		yield(get_tree().create_timer(attack_cooldown / 2.0), "timeout")
+		if (attacking):
+			sprite.set_frame(13)
+	elif (player_rotation <= -45 and player_rotation >= -135):
+		facing = "right"
+		sprite.set_frame(3)
+		yield(get_tree().create_timer(attack_cooldown / 2.0), "timeout")
+		if (attacking):
+			sprite.set_frame(2)
+	elif (player_rotation <= -135 or player_rotation >= 135):
+		facing = "down"
+		sprite.set_frame(19)
+		yield(get_tree().create_timer(attack_cooldown / 2.0), "timeout")
+		if (attacking):
+			sprite.set_frame(18)
+	elif (player_rotation <= 135 and player_rotation >= 45):
+		facing = "left"
+		sprite.set_frame(4)
+		yield(get_tree().create_timer(attack_cooldown / 2.0), "timeout")
+		if (attacking):
+			sprite.set_frame(5)
 		
-func look_at_cursor():
+
+func process_cursor():
 	var ray_length = 100
 	var mouse_pos = get_viewport().get_mouse_position()
 	var from = camera.project_ray_origin(mouse_pos)

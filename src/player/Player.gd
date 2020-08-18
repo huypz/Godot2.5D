@@ -8,7 +8,7 @@ onready var attack_ray = get_node("AttackRayCast")
 onready var attack_timer = get_node("AttackTimer")
 
 # Player properties
-var attack_cooldown : float = 0.1
+var attack_cooldown : float = 0.25
 var attacking : bool = false
 
 # Physics
@@ -35,10 +35,10 @@ func _ready():
 	
 	# Set up inventory slots.
 	for i in range(1, inventory_size + 1):
-		inventory[get_node("HUD/Inventory/Slot" + str(i))] = null
+		inventory[get_node("CanvasLayer/HUD/Inventory/Slot" + str(i))] = null
 		
 	# Set up inventory slots.
-	for slot in get_node("HUD/Equipment").get_children():
+	for slot in get_node("CanvasLayer/HUD/Equipment").get_children():
 		equipment[slot] = null
 		
 	give_item("Steel Dagger")
@@ -84,6 +84,22 @@ func process_input():
 	elif Input.is_action_just_released("left_click"):
 		attacking = false
 		
+	if Input.is_action_just_pressed("debug"):
+		pass
+		
+		
+func process_cursor():
+	var ray_length = 100
+	var mouse_pos = get_viewport().get_mouse_position()
+	var from = camera.project_ray_origin(mouse_pos)
+	var to = from + camera.project_ray_normal(mouse_pos) * ray_length
+	
+	var space_state = get_world().get_direct_space_state()
+	var result = space_state.intersect_ray(from, to)
+	if result:
+		cursor_pos = result.get("position")
+		cursor.global_transform.origin = cursor_pos
+		#cursor_pos.y = transform.origin.y
 		
 		
 func attack():
@@ -104,35 +120,35 @@ func attack():
 
 func update_movement_animation():
 	# Right
-	if local_direction == Vector3(1, 0, 0).rotated(Vector3(0, 1, 0), rotation.y):
+	if local_direction == Vector3(1, 0, 0).rotated(Vector3.UP, rotation.y):
 		anim_player.play("walk_right")
 		facing = "right"
 	# Left
-	if local_direction == Vector3(-1, 0, 0).rotated(Vector3(0, 1, 0), rotation.y):
+	if local_direction == Vector3(-1, 0, 0).rotated(Vector3.UP, rotation.y):
 		anim_player.play("walk_left")
 		facing = "left"
 	# Up
-	if local_direction == Vector3(0, 0, -1).rotated(Vector3(0, 1, 0), rotation.y):
+	if local_direction == Vector3(0, 0, -1).rotated(Vector3.UP, rotation.y):
 		anim_player.play("walk_up")
 		facing = "up"
 	# Down
-	if local_direction == Vector3(0, 0, 1).rotated(Vector3(0, 1, 0), rotation.y):
+	if local_direction == Vector3(0, 0, 1).rotated(Vector3.UP, rotation.y):
 		anim_player.play("walk_down")
 		facing = "down"
 	# Top-right
-	if local_direction == Vector3(1, 0, -1).rotated(Vector3(0, 1, 0), rotation.y):
+	if local_direction == Vector3(1, 0, -1).normalized().rotated(Vector3.UP, rotation.y):
 		anim_player.play("walk_up")
 		facing = "up"
 	# Top-left
-	if local_direction == Vector3(-1, 0, -1).rotated(Vector3(0, 1, 0), rotation.y):
+	if local_direction == Vector3(-1, 0, -1).normalized().rotated(Vector3.UP, rotation.y):
 		anim_player.play("walk_left")
 		facing = "left"
 	# Bottom-right
-	if local_direction == Vector3(1, 0, 1).rotated(Vector3(0, 1, 0), rotation.y):
+	if local_direction == Vector3(1, 0, 1).normalized().rotated(Vector3.UP, rotation.y):
 		anim_player.play("walk_right")
 		facing = "right"
 	# Bottom-left
-	if local_direction == Vector3(-1, 0, 1).rotated(Vector3(0, 1, 0), rotation.y):
+	if local_direction == Vector3(-1, 0, 1).normalized().rotated(Vector3.UP, rotation.y):
 		anim_player.play("walk_down")
 		facing = "down"
 	
@@ -168,20 +184,6 @@ func update_attack_animation():
 		yield(get_tree().create_timer(attack_cooldown / 2.0), "timeout")
 		if (attacking):
 			sprite.set_frame(5)
-		
-
-func process_cursor():
-	var ray_length = 100
-	var mouse_pos = get_viewport().get_mouse_position()
-	var from = camera.project_ray_origin(mouse_pos)
-	var to = from + camera.project_ray_normal(mouse_pos) * ray_length
-	
-	var space_state = get_world().get_direct_space_state()
-	var result = space_state.intersect_ray(from, to)
-	if result:
-		cursor_pos = result.get("position")
-		cursor.global_transform.origin = cursor_pos
-		cursor_pos.y = transform.origin.y
 	
 		
 func give_item(item_name):

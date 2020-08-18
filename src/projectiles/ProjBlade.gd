@@ -6,7 +6,7 @@ var target_pos setget set_target_pos
 
 # Projectile properties
 var duration := 3
-var speed := 25
+var speed := 15
 
 func _ready():
 	# Projectile disappears after duration
@@ -24,6 +24,7 @@ func _physics_process(delta):
 
 func set_target_pos(pos):
 	global_transform = global_transform.looking_at(pos, Vector3.UP)
+	set_rotation_degrees(Vector3(0, rotation_degrees.y, rotation_degrees.z))
 
 
 func set_source(node):

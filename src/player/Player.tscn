@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://assets/sprites/chars/char_rogue.png" type="Texture" id=1]
 [ext_resource path="res://src/player/Player.gd" type="Script" id=2]
@@ -188,12 +188,19 @@ tracks/0/keys = {
 "values": [ 11, 12 ]
 }
 
+[sub_resource type="SphereMesh" id=15]
+radius = 0.2
+height = 0.4
+
+[sub_resource type="SpatialMaterial" id=16]
+flags_unshaded = true
+albedo_color = Color( 1, 0, 0, 1 )
+
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 2 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 50, 10, 8 )
-projection = 1
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
 size = 30.0
 
 [node name="Hitbox" type="CollisionShape" parent="."]
@@ -205,8 +212,6 @@ shape = SubResource( 1 )
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 transform = Transform( 0.65, 0, 0, 0, -2.84124e-08, -0.5, 0, 0.65, -2.18557e-08, 0, 0, 0 )
 shape = SubResource( 2 )
-
-[node name="CameraAxis" type="Spatial" parent="."]
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 pixel_size = 0.02
@@ -232,5 +237,10 @@ anims/walk_right = SubResource( 13 )
 anims/walk_up = SubResource( 14 )
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
+visible = false
+
+[node name="Cursor" type="MeshInstance" parent="."]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
 [connection signal="area_entered" from="Area" to="." method="_on_Area_area_entered"]
 [connection signal="area_exited" from="Area" to="." method="_on_Area_area_exited"]

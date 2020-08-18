@@ -2,6 +2,9 @@ extends KinematicBody
 
 const Projectile = preload("res://src/projectiles/ProjBlade.tscn")
 
+onready var camera = get_node("Camera")
+onready var cursor = get_node("Cursor")
+
 # Physics
 var speed := 15
 var global_direction : Vector3
@@ -39,6 +42,7 @@ func _ready():
 func _physics_process(delta):	
 	global_direction = Vector3.ZERO
 	
+	look_at_cursor()
 	process_input()
 	
 	local_direction = move_and_slide(local_direction * speed, Vector3(0, 1, 0))
@@ -96,8 +100,36 @@ func process_input():
 	# Camera controls.
 	if Input.is_action_pressed("rotate_right"):
 		rotate_y(-PI * 0.01)
+		cursor.rotate_y(-(-PI * 0.01))
 	elif Input.is_action_pressed("rotate_left"):
 		rotate_y(PI * 0.01)	
+		cursor.rotate_y(-PI * 0.01)
+		
+	# Attack
+	if Input.is_action_just_pressed("left_click"):
+		attack();
+	elif Input.is_action_just_released("left_click"):
+		pass
+		
+		
+func attack():
+	var proj = Projectile.instance()
+	get_tree().root.get_node("World").add_child(proj)
+	proj.global_transform.origin = global_transform.origin
+
+		
+func look_at_cursor():
+	var player_pos = global_transform.origin
+	var dropPlane = Plane(Vector3(0, 1, 0), player_pos.y + 1)
+	
+	var ray_length = 1000
+	var mouse_pos = get_viewport().get_mouse_position()
+	var from = camera.project_ray_origin(mouse_pos)
+	var to = from + camera.project_ray_normal(mouse_pos) * ray_length
+	var cursor_pos = dropPlane.intersects_ray(from, to) #+ Vector3(0, 0.2, 0)
+	
+	cursor.global_transform.origin = cursor_pos
+	
 		
 		
 func give_item(item_name):

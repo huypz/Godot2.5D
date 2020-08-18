@@ -1,4 +1,4 @@
-extends Sprite3D
+extends Area
 
 # Physics properties
 var direction setget set_direction
@@ -15,11 +15,10 @@ func _ready():
 	timer.connect("timeout", self, "despawn")
 	add_child(timer)
 	timer.start()
-
-	look_at(direction, Vector3(0, 1, 0))
+	
 
 func _physics_process(delta):
-	pass
+	transform.origin += Vector3.RIGHT * speed * delta
 
 
 func set_direction(dir):

@@ -1,7 +1,9 @@
 extends KinematicBody
 
+const Projectile = preload("res://src/projectiles/ProjBlade.tscn")
+
 # Physics
-var speed := 8
+var speed := 15
 var global_direction : Vector3
 var local_direction : Vector3
 
@@ -34,16 +36,7 @@ func _ready():
 	give_item("Wolfskin Armor")
 
 
-func _physics_process(delta):
-	if Input.is_action_just_pressed("debug"):
-#		print("item database:")
-#		print(Items.database)
-		print("player inv:")
-		print(inventory)
-		print("\n")
-		print("player eq:")
-		print(equipment)
-		
+func _physics_process(delta):	
 	global_direction = Vector3.ZERO
 	
 	process_input()
@@ -61,7 +54,7 @@ func process_input():
 	if Input.is_action_pressed("ui_up"):
 		global_direction.z -= 1
 		
-	local_direction = global_direction.rotated(Vector3(0, 1, 0), rotation.y)
+	local_direction = global_direction.normalized().rotated(Vector3(0, 1, 0), rotation.y)
 	
 	# Right
 	if local_direction == Vector3(1, 0, 0).rotated(Vector3(0, 1, 0), rotation.y):

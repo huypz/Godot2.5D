@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/char_rogue.png-c695631a63429518c514f68eb1ab3dac.s3tc.stex"
-path.etc2="res://.import/char_rogue.png-c695631a63429518c514f68eb1ab3dac.etc2.stex"
+path.s3tc="res://.import/proj_blade.png-fac9dd42f4bb49d1d0b3b4e07aa16968.s3tc.stex"
+path.etc2="res://.import/proj_blade.png-fac9dd42f4bb49d1d0b3b4e07aa16968.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/chars/char_rogue.png"
-dest_files=[ "res://.import/char_rogue.png-c695631a63429518c514f68eb1ab3dac.s3tc.stex", "res://.import/char_rogue.png-c695631a63429518c514f68eb1ab3dac.etc2.stex" ]
+source_file="res://assets/sprites/projectiles/proj_blade.png"
+dest_files=[ "res://.import/proj_blade.png-fac9dd42f4bb49d1d0b3b4e07aa16968.s3tc.stex", "res://.import/proj_blade.png-fac9dd42f4bb49d1d0b3b4e07aa16968.etc2.stex" ]
 
 [params]
 

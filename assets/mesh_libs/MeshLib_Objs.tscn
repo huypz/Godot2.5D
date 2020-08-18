@@ -9,6 +9,7 @@ points = PoolVector3Array( 1, 1, 1, 1, 1, -1, -1, 1, -1, -1, 1, 1, -1, 1, 1, -1,
 
 [node name="brown_wall" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1 )
+layers = 2147483649
 
 [node name="StaticBody" type="StaticBody" parent="brown_wall"]
 

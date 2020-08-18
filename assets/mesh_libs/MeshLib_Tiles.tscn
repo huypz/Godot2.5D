@@ -6,7 +6,7 @@
 flags_unshaded = true
 albedo_texture = ExtResource( 1 )
 
-[sub_resource type="QuadMesh" id=2]
+[sub_resource type="QuadMesh" id=4]
 material = SubResource( 1 )
 size = Vector2( 2, 2 )
 
@@ -17,7 +17,7 @@ points = PoolVector3Array( -1, -1, 0, -1, 1, 0, 1, 1, 0, -1, -1, 0, 1, 1, 0, 1, 
 
 [node name="grass" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 2 )
+mesh = SubResource( 4 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="grass"]

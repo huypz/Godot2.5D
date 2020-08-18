@@ -81,6 +81,15 @@ debug={
  ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="GridMapObj"
+3d_physics/layer_2="GridMapTile"
+3d_physics/layer_3="GridMapDecor"
+3d_physics/layer_4="Player"
+3d_physics/layer_5="Enemy"
+3d_physics/layer_6="Projectile"
+
 [rendering]
 
 quality/2d/use_pixel_snap=true

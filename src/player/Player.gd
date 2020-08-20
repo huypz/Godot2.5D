@@ -3,9 +3,10 @@ extends KinematicBody
 const Projectile = preload("res://src/projectiles/ProjBlade.tscn")
 
 onready var camera = get_node("Camera")
-onready var cursor = get_node("Cursor")
+#onready var cursor = get_node("Cursor")
 onready var attack_ray = get_node("AttackRayCast")
 onready var attack_timer = get_node("AttackTimer")
+onready var hud = get_node("CanvasLayer/HUD")
 
 # Player properties
 var attack_cooldown : float = 0.25
@@ -13,7 +14,7 @@ var attacking : bool = false
 
 # Physics
 var cursor_pos : Vector3
-var speed := 15
+var speed := 10
 var global_direction : Vector3
 var local_direction : Vector3
 
@@ -53,6 +54,7 @@ func _physics_process(delta):
 	process_input()
 	if (!attacking):
 		update_movement_animation()
+	process_camera()
 	
 	local_direction = move_and_slide(local_direction * speed, Vector3(0, 1, 0))
 
@@ -67,13 +69,8 @@ func process_input():
 	if Input.is_action_pressed("ui_up"):
 		global_direction.z -= 1
 		
+	global_direction = global_direction.normalized()
 	local_direction = global_direction.normalized().rotated(Vector3(0, 1, 0), rotation.y)
-	
-	# Camera controls.
-	if Input.is_action_pressed("rotate_right"):
-		rotate_y(-PI * 0.01)
-	elif Input.is_action_pressed("rotate_left"):
-		rotate_y(PI * 0.01)	
 		
 	# Attack
 	if Input.is_action_pressed("left_click"):
@@ -85,7 +82,9 @@ func process_input():
 		attacking = false
 		
 	if Input.is_action_just_pressed("debug"):
-		pass
+		print(global_transform.origin)
+		print(global_direction.normalized() * speed)
+		#print(global_direction.normalized())
 		
 		
 func process_cursor():
@@ -95,11 +94,19 @@ func process_cursor():
 	var to = from + camera.project_ray_normal(mouse_pos) * ray_length
 	
 	var space_state = get_world().get_direct_space_state()
-	var result = space_state.intersect_ray(from, to)
+	var result = space_state.intersect_ray(from, to, [], 0x7FFFFFFF, false, true)
 	if result:
 		cursor_pos = result.get("position")
-		cursor.global_transform.origin = cursor_pos
+		#cursor.global_transform.origin = cursor_pos
 		#cursor_pos.y = transform.origin.y
+		
+	
+func process_camera():
+	# Camera controls.
+	if Input.is_action_pressed("rotate_right"):
+		rotate_y(-PI * 0.01)
+	elif Input.is_action_pressed("rotate_left"):
+		rotate_y(PI * 0.01)	
 		
 		
 func attack():
@@ -107,13 +114,13 @@ func attack():
 	attack_timer.set_wait_time(attack_cooldown)
 	attack_timer.start()
 	
-	attack_ray.global_transform = global_transform.looking_at(cursor_pos, Vector3.UP)
+	var angle = global_transform.looking_at(cursor_pos, Vector3.UP)
+	attack_ray.global_transform = angle
 	
 	var proj = Projectile.instance()
 	proj.set_source(self)
 	get_tree().root.get_node("World").add_child(proj)
-	proj.global_transform.origin = global_transform.origin
-	proj.set_target_pos(cursor_pos)
+	proj.global_transform = angle
 	
 	update_attack_animation()
 	
@@ -217,9 +224,9 @@ func get_inventory():
 
 func _on_Area_area_entered(area):
 	if area.get_parent().is_in_group("loot_bag"):
-		$HUD.show_loot_bag(area.get_parent())
+		hud.show_loot_bag(area.get_parent())
 
 
 func _on_Area_area_exited(area):
 	if area.get_parent().is_in_group("loot_bag"):
-		$HUD.hide_loot_bag(area.get_parent())
+		hud.hide_loot_bag(area.get_parent())

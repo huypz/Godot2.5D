@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node",
+"class": "Behaviors",
+"language": "GDScript",
+"path": "res://src/Behaviors.gd"
+}, {
+"base": "Node",
+"class": "Transitions",
+"language": "GDScript",
+"path": "res://src/Transitions.gd"
+} ]
 _global_script_class_icons={
-
+"Behaviors": "",
+"Transitions": ""
 }
 
 [application]
@@ -92,5 +103,5 @@ debug={
 
 [rendering]
 
-quality/2d/use_pixel_snap=true
 environment/default_environment="res://default_env.tres"
+quality/dynamic_fonts/use_oversampling=false

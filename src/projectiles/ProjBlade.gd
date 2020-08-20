@@ -2,11 +2,11 @@ extends Area
 
 # Physics properties
 var source setget set_source
-var target_pos setget set_target_pos
+var angle := 0 setget set_angle
 
 # Projectile properties
-var duration := 3
-var speed := 15
+var duration := 5 setget set_duration
+var speed := 10 setget set_speed, get_speed
 
 func _ready():
 	# Projectile disappears after duration
@@ -22,13 +22,24 @@ func _physics_process(delta):
 	translate_object_local(Vector3(0, 0, -speed * delta))
 
 
-func set_target_pos(pos):
-	global_transform = global_transform.looking_at(pos, Vector3.UP)
-	set_rotation_degrees(Vector3(0, rotation_degrees.y, rotation_degrees.z))
-
-
 func set_source(node):
 	source = node
+
+
+func set_speed(value):
+	speed = value
+	
+	
+func set_duration(sec):
+	duration = sec
+	
+	
+func set_angle(rad):
+	angle = rad
+
+
+func get_speed():
+	return speed
 
 
 func despawn():

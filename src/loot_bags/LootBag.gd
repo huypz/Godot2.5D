@@ -9,7 +9,7 @@ var slots : Dictionary setget , get_slots
 
 func _ready():
 	# Set up slots
-	for slot in get_tree().root.get_node("World/Player/HUD/LootBase/Loot").get_children():
+	for slot in get_tree().root.get_node("World/Player/CanvasLayer/HUD/LootBase/Loot").get_children():
 		slots[slot] = null
 	
 	# Bag despawns after 'duration' seconds

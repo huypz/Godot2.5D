@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/sprites/enemies/ent_god.png" type="Texture" id=1]
+[ext_resource path="res://src/enemies/EntGod.gd" type="Script" id=2]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 23
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 132, 131 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 23
+atlas = ExtResource( 1 )
+region = Rect2( 132, 0, 132, 131 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 23
+atlas = ExtResource( 1 )
+region = Rect2( 264, 0, 132, 131 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 23
+atlas = ExtResource( 1 )
+region = Rect2( 528, 0, 132, 131 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 23
+atlas = ExtResource( 1 )
+region = Rect2( 660, 0, 132, 131 )
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "walk",
+"speed": 3.0
+} ]
+
+[sub_resource type="BoxShape" id=7]
+
+[node name="EntGod" type="KinematicBody"]
+collision_layer = 16
+collision_mask = 33
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+offset = Vector2( 0, 10 )
+pixel_size = 0.02
+billboard = 1
+frames = SubResource( 6 )
+animation = "idle"
+
+[node name="HitBox" type="CollisionShape" parent="."]
+shape = SubResource( 7 )
+
+[node name="Position3D" type="Position3D" parent="."]

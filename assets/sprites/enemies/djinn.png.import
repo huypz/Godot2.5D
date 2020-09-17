@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/cloak_bg.png-6b519fcd9779333c77500be966172174.stex"
+path="res://.import/djinn.png-c7e60865635fa5e7d32f615475653609.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/items/cloak_bg.png"
-dest_files=[ "res://.import/cloak_bg.png-6b519fcd9779333c77500be966172174.stex" ]
+source_file="res://assets/sprites/enemies/djinn.png"
+dest_files=[ "res://.import/djinn.png-c7e60865635fa5e7d32f615475653609.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

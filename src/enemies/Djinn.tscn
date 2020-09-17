@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/sprites/enemies/djinn.png" type="Texture" id=1]
+[ext_resource path="res://src/enemies/Djinn.gd" type="Script" id=2]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 144, 144 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 144, 0, 144, 144 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 288, 0, 144, 144 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "walk",
+"speed": 5.0
+} ]
+
+[sub_resource type="BoxShape" id=5]
+
+[node name="Djinn" type="KinematicBody"]
+collision_layer = 16
+collision_mask = 32
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0 )
+pixel_size = 0.02
+billboard = 1
+double_sided = false
+frames = SubResource( 4 )
+animation = "idle"
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 5 )

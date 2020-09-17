@@ -4,7 +4,7 @@
 [ext_resource path="res://src/player/Player.gd" type="Script" id=2]
 [ext_resource path="res://src/player/HUD.tscn" type="PackedScene" id=3]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite3D:frame")
@@ -19,7 +19,7 @@ tracks/0/keys = {
 "values": [ 19, 18 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite3D:frame")
@@ -34,7 +34,7 @@ tracks/0/keys = {
 "values": [ 4, 5 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite3D:frame")
@@ -49,7 +49,7 @@ tracks/0/keys = {
 "values": [ 3, 2 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite3D:frame")
@@ -64,7 +64,7 @@ tracks/0/keys = {
 "values": [ 14, 13 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite3D:frame")
@@ -79,7 +79,7 @@ tracks/0/keys = {
 "values": [ 15 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite3D:frame")
@@ -94,7 +94,7 @@ tracks/0/keys = {
 "values": [ 7 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite3D:frame")
@@ -109,7 +109,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite3D:frame")
@@ -124,7 +124,7 @@ tracks/0/keys = {
 "values": [ 10 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite3D:frame")
@@ -139,7 +139,7 @@ tracks/0/keys = {
 "values": [ 16, 17 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite3D:frame")
@@ -154,7 +154,7 @@ tracks/0/keys = {
 "values": [ 6, 7 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=11]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite3D:frame")
@@ -169,7 +169,7 @@ tracks/0/keys = {
 "values": [ 1, 0 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=12]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite3D:frame")
@@ -184,9 +184,9 @@ tracks/0/keys = {
 "values": [ 11, 12 ]
 }
 
-[sub_resource type="BoxShape" id=14]
+[sub_resource type="BoxShape" id=13]
 
-[sub_resource type="BoxShape" id=15]
+[sub_resource type="BoxShape" id=14]
 
 [node name="Player" type="KinematicBody"]
 collision_layer = 8
@@ -196,16 +196,17 @@ script = ExtResource( 2 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.353553, 0.353553, 0, -0.353553, 0.353553, 0, 20, 15 )
 keep_aspect = 0
-h_offset = 6.3
+h_offset = 4.4
 projection = 1
 current = true
-size = 50.0
+size = 35.0
 
 [node name="AttackRayCast" type="RayCast" parent="."]
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 pixel_size = 0.02
 billboard = 1
+double_sided = false
 texture = ExtResource( 1 )
 vframes = 2
 hframes = 10
@@ -213,28 +214,28 @@ frame = 19
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-anims/attack_down = SubResource( 2 )
-anims/attack_left = SubResource( 3 )
-anims/attack_right = SubResource( 4 )
-anims/attack_up = SubResource( 5 )
-anims/idle_down = SubResource( 6 )
-anims/idle_left = SubResource( 7 )
-anims/idle_right = SubResource( 8 )
-anims/idle_up = SubResource( 9 )
-anims/walk_down = SubResource( 10 )
-anims/walk_left = SubResource( 11 )
-anims/walk_right = SubResource( 12 )
-anims/walk_up = SubResource( 13 )
+anims/attack_down = SubResource( 1 )
+anims/attack_left = SubResource( 2 )
+anims/attack_right = SubResource( 3 )
+anims/attack_up = SubResource( 4 )
+anims/idle_down = SubResource( 5 )
+anims/idle_left = SubResource( 6 )
+anims/idle_right = SubResource( 7 )
+anims/idle_up = SubResource( 8 )
+anims/walk_down = SubResource( 9 )
+anims/walk_left = SubResource( 10 )
+anims/walk_right = SubResource( 11 )
+anims/walk_up = SubResource( 12 )
 
 [node name="ColliderBox" type="CollisionShape" parent="."]
 transform = Transform( 0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0 )
-shape = SubResource( 14 )
+shape = SubResource( 13 )
 
 [node name="HitBox" type="Area" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="HitBox"]
 transform = Transform( 0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0 )
-shape = SubResource( 15 )
+shape = SubResource( 14 )
 
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true

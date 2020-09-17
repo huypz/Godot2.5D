@@ -1,21 +1,21 @@
 extends KinematicBody
 
 # USAGE
-# shoot(host, projectile, radius, count = 1, shoot_angle = null, 
+# shoot(host, projectile, radius, count = 1, delay = 0, shoot_angle = null, 
 #  fixed_angle = null, angle_offset = 0, default_angle = null, predictive = 0)
 
-const Projectile = preload("res://src/projectiles/ProjBlade.tscn")
+const Projectile = preload("res://src/projectiles/FireBolt.tscn")
 
 var Behavior
 var Transition
 var player setget , get_player
 
 enum States {
-	IDLE,
-	WANDER,
-	ATTACK
+	SEARCH,
+	WAIT,
+	ATTACK,
 }
-var state = States.IDLE setget set_state
+var state = States.SEARCH setget set_state
 
 var velocity : Vector3 setget set_velocity, get_velocity
 
@@ -24,25 +24,23 @@ func _ready():
 	Behavior = Behaviors.new()
 	Transition = Transitions.new()
 	player = get_tree().root.get_node("World/Player")
+	global_transform = global_transform.looking_at(player.global_transform.origin, Vector3.UP)
 
 
 func _physics_process(delta):
 	Behavior.set_delta(delta)
 	
 	match state:
-		States.IDLE:
-			Behavior.idle(self)
-			Transition.player_within(self, States.WANDER, 10)
-		States.WANDER:
+		States.SEARCH:
 			Behavior.wander(self, 3)
-			Transition.next(self, States.ATTACK, 1)
+			Behavior.follow(self, 5)
+			Transition.next(self, States.ATTACK, 2)
 		States.ATTACK:
-			Behavior.shoot(self, Projectile, 8, 5, 10, null, 0, null, 0.3)
-			Transition.next(self, States.WANDER)
+			Behavior.shoot(self, Projectile, 8, 5, 0, 10, null, 0, null, 0.3)
+			Transition.next(self, States.SEARCH)
 			
 	update_animation()
 			
-
 
 func update_animation():
 	if (velocity.length() > 0):

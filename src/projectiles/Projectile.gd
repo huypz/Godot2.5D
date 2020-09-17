@@ -8,6 +8,7 @@ var angle := 0 setget set_angle
 var duration := 5 setget set_duration
 var speed := 10 setget set_speed, get_speed
 
+
 func _ready():
 	# Projectile disappears after duration
 	var timer = Timer.new()

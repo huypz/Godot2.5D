@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/sprites/projectiles/fire_bolt.png" type="Texture" id=1]
+[ext_resource path="res://src/projectiles/Projectile.gd" type="Script" id=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.15, 0.8, 0.1 )
+
+[node name="Projectile" type="Area"]
+collision_layer = 32
+collision_mask = 25
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( -0.707107, 0.707107, -1.15203e-07, 0, -1.62921e-07, -1, -0.707107, -0.707107, 1.15203e-07, 0, 0, 0 )
+pixel_size = 0.15
+texture = ExtResource( 1 )
+[connection signal="body_entered" from="." to="." method="_on_ProjBlade_body_entered"]

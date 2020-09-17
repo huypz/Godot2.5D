@@ -1,6 +1,6 @@
 extends KinematicBody
 
-const Projectile = preload("res://src/projectiles/ProjBlade.tscn")
+const Projectile = preload("res://src/projectiles/WhiteBullet.tscn")
 
 onready var camera = get_node("Camera")
 #onready var cursor = get_node("Cursor")
@@ -119,6 +119,7 @@ func attack():
 	
 	var proj = Projectile.instance()
 	proj.set_source(self)
+	proj.set_speed(15)
 	get_tree().root.get_node("World").add_child(proj)
 	proj.global_transform = angle
 	
